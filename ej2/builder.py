@@ -5,6 +5,7 @@ import csv
 import tkinter as tk
 from tkinter import messagebox
 
+#Clase Cliente
 class Cliente:
     def __init__(self, nombre_usuario, contraseña, nombre_personal, correo):
         self.nombre_usuario = nombre_usuario
@@ -26,6 +27,7 @@ class Cliente:
                 self.correo
                 ])
 
+#Clase Pizza
 class Pizza:
     def __init__(self, nombre):
         self.nombre = nombre
@@ -62,6 +64,7 @@ class Pizza:
     def set_acabado_extra(self, acabado):
         self.acabado_extra = acabado
 
+#El constructor de pizza
 class ConstructorPizza(ABC):
     @abstractmethod
     def reset(self):
@@ -99,53 +102,6 @@ class ConstructorPizza(ABC):
     def construir_acabado_extra(self):
         pass
 
-class ConstructorPizzaPersonalizada(ConstructorPizza):
-    def __init__(self):
-        self.reset()
-        
-    def reset(self):
-        self.pizza = Pizza("Personalizada")
-
-    def construir_tamano(self):
-        self.pizza.set_tamano(input("Elije el tamaño (individual, mediana, familiar): "))
-
-    def construir_masa(self):
-        self.pizza.set_masa(input("Elije la masa (fina, gruesa, de masa madre): "))
-         
-    def construir_salsa(self):
-        self.pizza.set_salsa(input("Elije la salsa (tomate, barbacoa, crema): "))
-        
-    def construir_ingredientes(self):
-        ingredientes = self.elegir_ingredientes()
-        self.pizza.set_ingredientes(ingredientes)
-    
-    def construir_tecnica_coccion(self):
-        self.pizza.set_tecnica_coccion(input("Elije la técnica de cocción (horno de leña, horno tradicional): "))
-        
-    def construir_presentacion(self):
-        self.pizza.set_presentacion(input("Elije la presentación (clásica, artística): "))
-        
-    def construir_maridaje(self):
-        self.pizza.set_maridaje(input("Elije el maridaje (vino tinto, cerveza, refresco): "))
-        
-    def construir_acabado_extra(self):
-        self.pizza.set_acabado_extra(input("Elije el acabado extra (aceite de trufa, glaseado de balsámico): "))
-    
-    def elegir_ingredientes(self):
-        ingredientes_disponibles = ["Pepperoni", "Champiñones", "Cebolla", "Salchicha", "Tocino", "Queso Extra", "Aceitunas", "Tomates", "Espinacas", "Tocino", "Salchicha italiana", "Jamón", "Anchoas", "Piña", "Maíz", "Alcachofas", "Chorizo", "Espárragos", "Berenjena", "Rúcula", "Huevo"]
-        print("Elige hasta 5 ingredientes (escribe 'listo' cuando termines):")
-        ingredientes_elegidos = []
-        while len(ingredientes_elegidos) < 5:
-            print(f"Ingredientes disponibles: {ingredientes_disponibles}")
-            ingrediente = input("Ingresa el ingrediente: ")
-            if ingrediente.lower() == 'listo':
-                break
-            elif ingrediente in ingredientes_disponibles:
-                ingredientes_elegidos.append(ingrediente)
-                ingredientes_disponibles.remove(ingrediente)
-            else:
-                print("Ingrediente inválido. Por favor elige de la lista de ingredientes disponibles.")
-        return ingredientes_elegidos
 
 # Declarar las variables como globales
 entry_nombre_usuario = None
@@ -153,6 +109,7 @@ entry_contraseña = None
 entry_nombre_personal = None
 entry_correo = None
 
+#Funcion para que el cliente se guarde usando la clase
 def obtener_informacion_cliente(entry_nombre_usuario, entry_contraseña, entry_nombre_personal, entry_correo):
     nombre_usuario = entry_nombre_usuario.get()
     contraseña = entry_contraseña.get()
@@ -162,6 +119,7 @@ def obtener_informacion_cliente(entry_nombre_usuario, entry_contraseña, entry_n
     cliente = Cliente(nombre_usuario, contraseña, nombre_personal, correo)
     return cliente
 
+#Interfaz del cliente
 def crear_interfaz():
     global entry_nombre_usuario, entry_contraseña, entry_nombre_personal, entry_correo
     # Crear la ventana principal
@@ -200,7 +158,8 @@ ingredientes_disponibles = [
         "Queso Extra", "Aceitunas", "Tomates", "Espinacas", "Salchicha italiana",
         "Jamón", "Anchoas", "Piña", "Maíz", "Alcachofas", "Chorizo",
         "Espárragos", "Berenjena", "Rúcula", "Huevo"
-    ]
+]
+#Funcion final para guardar la pizza en las variables correspondientes y se guarde el pedido en el csv
 def guardar_pizza():
     # Obtener los valores ingresados por el usuario
     tamano = tamano_var.get()
@@ -225,11 +184,10 @@ def guardar_pizza():
             acabado_extra
         ])
     
-    messagebox.showinfo("Pedido Realizado")
+    messagebox.showinfo(title="Pedido Realizado", message= "El pedido se ha envido correctamente")
     
-
+#Creamos la interfaz para pedir la pizza
 def crear_interfaz_pizza():
-    # Crear la ventana para la creación de la pizza
     global tamano_var, masa_var, salsa_var, lista_ingredientes, tecnica_coccion_var, presentacion_var, maridaje_var, acabado_extra_var 
     root_pizza = tk.Tk()
     root_pizza.title("Creación de Pizza Personalizada")
