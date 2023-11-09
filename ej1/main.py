@@ -15,5 +15,3 @@ if __name__ == "__main__":
     print("Client: Testing client code with the second factory type:")
     print(factory2.create_product_a().useful_function_a(df))
     print(factory2.create_product_b().useful_function_b(df))
-
-    
